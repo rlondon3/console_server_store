@@ -2,15 +2,17 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 workflows:
+  version: 2
   build-tests:
     jobs:
       - run_tests:
           context: console_server_store
+
 jobs:
   run_tests:
+    executor:
+      name: node/default
     steps:
-      - node/install:
-          node-version: "20.8.1"
       - checkout
       - node/install-packages:
           cache-path: ./node_modules
@@ -24,3 +26,4 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             node ./node_modules/mocha/bin/mocha **/**/*_spec.js --exit
+
