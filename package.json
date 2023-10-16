@@ -26,7 +26,7 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "node build/server.js",
-    "test": "mocha **/*_spec.js --exit",
+    "test": "mocha ./**/*_spec.js --exit",
     "build": "tsc"
   },
   "author": "",
