@@ -1,8 +1,9 @@
-import { UserStore } from "../user";
+const { UserStore } = require("../user");
 //import supertest from 'supertest';
 //import app from '../../server';
-import dotenv from 'dotenv';
-import chai from 'chai';
+const dotenv = require('dotenv');
+const chai = require('chai');
+
 
 dotenv.config();
 const expect = chai.expect;
