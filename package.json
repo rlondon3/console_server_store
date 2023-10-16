@@ -29,6 +29,7 @@
     "test": "mocha ./**/*_spec.js --exit",
     "build": "tsc"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "directories": {
