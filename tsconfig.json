@@ -19,16 +19,7 @@
       "noImplicitThis": false,
       "strictNullChecks": false,
       "outDir": "./build",
-      "baseUrl": ".",
-      "paths": {
-        "@server/*": ["src/*"],
-        "@tests/*": ["__tests__/*"],
-        "@config/*": ["src/config/*"],
-        "@domain/*": ["src/domain/*"],
-        "@controller/*": ["src/controller/*"],
-        "@middleware/*": ["src/middleware/*"]
-      }
+      "baseUrl": "."
     },
-    "include": ["src/**/*", "__tests__/**/*"],
     "exclude": ["node_modules", "build"]
   }
