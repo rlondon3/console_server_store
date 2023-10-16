@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  },
+  "name": "store_backend",
+  "version": "1.0.0",
+  "description": "Console and Server Backend for store",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "node build/app.js", 
+    "test": "mocha",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
