@@ -25,5 +25,5 @@ jobs:
       - run:
           name: Run Mocha Unit Tests
           command: |
-            node ./node_modules/mocha/bin/mocha **/*_spec --exit
+            npm run test
 
