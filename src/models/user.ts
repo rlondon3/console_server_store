@@ -41,12 +41,12 @@ export class UserStore {
         try {
             const conn: PoolClient = await client.connect();
             const sql =
-            'INSERT INTO users (usersname, passowrd, isAdmin) VALUES ($1, $2, $3) RETURNING *;';
+            'INSERT INTO users (username, password, isAdmin) VALUES ($1, $2, $3) RETURNING *';
             const hash = bcrypt.hashSync(
                 user.password + `${PEPPER}.processs.env`,
                 parseInt(`${SALT_ROUNDS}.process.env` as string)
             );
-            const res = await conn.query(sql, [user.username, hash]);
+            const res = await conn.query(sql, [user.username, hash, user.isAdmin]);
             conn.release();
             return res.rows[0];
         } catch (error) {
@@ -56,7 +56,7 @@ export class UserStore {
     async update(user: User): Promise<User> {
         try {
             const sql = 
-            'UPDATE users SET username=($1), password=($2), isAdmin=($3) WHERE id=($4) RETURNING *;';
+            'UPDATE users SET username=($1), password=($2), isAdmin=($3) WHERE id=($4) RETURNING *';
             const conn: PoolClient = await client.connect();
             const hash = bcrypt.hashSync(
                 user.password + `${PEPPER}`,
@@ -82,11 +82,11 @@ export class UserStore {
     }
     async authenticate(username: string, password: string): Promise<User | null> {
         try {
-            const sql = 'SELECT * FROM users WHERE username=($1);';
+            const sql = 'SELECT * FROM users WHERE username=($1)';
             const conn: PoolClient = await client.connect();
             const res = await conn.query(sql, [username]);
             if (res.rows.length) {
-                bcrypt.compareSync(password + `${PEPPER}`, res.rows[0].passowrd);
+                bcrypt.compareSync(password + `${PEPPER}`, res.rows[0].password);
                 return res.rows[0];
             }
             return null;
