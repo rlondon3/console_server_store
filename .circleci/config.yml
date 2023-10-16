@@ -1,3 +1,11 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.2
+workflows:
+  build-tests:
+    jobs:
+      - run_tests:
+          context: console_server_store
 jobs:
   run_tests:
     steps:
