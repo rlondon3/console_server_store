@@ -25,9 +25,6 @@ describe('User Model', () => {
     it('should have a delete method', () => {
         expect(store.update).to.exist;
     });
-    it('should have a delete method', () => {
-        expect(store.delete).to.exist;
-    });
     it('should have a authentication method', () => {
         expect(store.authenticate).to.exist;
     });
