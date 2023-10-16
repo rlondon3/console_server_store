@@ -24,5 +24,6 @@ jobs:
             npm -v
       - run:
           name: Run Mocha Unit Tests
-          command: npm run test
+          command: |
+            node ./node_modules/mocha/bin/mocha ./**/*_spec.js --exit
 
