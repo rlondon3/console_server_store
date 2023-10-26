@@ -28,7 +28,7 @@ jobs:
           name: install postgresql-client
           command: |
             sudo apt-get update
-            apt-get add postgresql-client
+            apt-get install postgresql-client
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
