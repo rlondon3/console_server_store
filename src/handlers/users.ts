@@ -30,11 +30,25 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
     const user: User = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        address: req.body.address,
         username: req.body.username,
         password: req.body.password,
         isAdmin: req.body.isAdmin
     };
     try {
+         // Check if the email and username already exist
+        const emailExists = await store.emailExists(user.email);
+        const usernameExists = await store.usernameExists(user.username);
+        if (emailExists) {
+            return res.status(400).json({ error: 'Email already exists!' });
+        }
+
+        if (usernameExists) {
+            return res.status(400).json({ error: 'Username already exists!' });
+        }
         const newUser = await store.create(user);
         const token = jwt.sign(
             {
@@ -42,16 +56,20 @@ const create = async (req: Request, res: Response) => {
             },
             `${process.env.TOKEN_SECRET}` as jwt.Secret
         );
-        res.json(token);
+        
+        return res.json(token);
     } catch (error) {
-        res.status(400);
-        res.json(error);        
+        return res.status(400).json(error);        
     }
 };
 
 const update = async (req: Request, res: Response) => {
     const user: User = {
         id: parseInt(req.params.id),
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        address: req.body.address,
         username: req.body.username,
         password: req.body.password,
         isAdmin: req.body.isAdmin
@@ -64,7 +82,7 @@ const update = async (req: Request, res: Response) => {
             },
             `${process.env.TOKEN_SECRET}` as jwt.Secret
         );
-        res.json(token);
+        res.status(200).json(token);
     } catch (error) {
         res.status(400);
         res.json(error);
@@ -106,11 +124,11 @@ const authenticate = async (req: Request, res: Response) => {
 
 const users_route = (app: express.Application) => {
     app.post('/verify/users', authenticationToken, index);
-    app.post('/verify/users/:id', authenticationToken, show);
+    app.post('/verify/user/:id', authenticationToken, show);
     app.post('/create/user', create);
-    app.put('/users/:id', authenticateUserId, update);
-    app.delete('/users/:id', authenticateUserId, deletes);
-    app.post('/users/authenticate', authenticate);
+    app.put('/user/:id', authenticateUserId, update);
+    app.delete('/useR/:id', authenticateUserId, deletes);
+    app.post('/user/authenticate', authenticate);
 }
 
 export default users_route;

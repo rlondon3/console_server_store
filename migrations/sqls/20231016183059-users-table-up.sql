@@ -1,1 +1,1 @@
-CREATE TABLE users (id SERIAL PRIMARY KEY, username VARCHAR(100), password VARCHAR(100), isAdmin BOOLEAN);
+CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, firstname VARCHAR(100), lastname VARCHAR(100), email VARCHAR(50), address VARCHAR(250), username VARCHAR(100), password VARCHAR(100), isAdmin BOOLEAN);

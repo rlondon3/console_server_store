@@ -5,10 +5,18 @@ workflows:
   version: 2
   build-tests:
     jobs:
+      - build
       - run_tests:
-          context: console_server_store
-
+          requires:
+            - build
 jobs:
+  build:
+    docker:
+      - image: cimg/go:1.17
+      - image: cimg/postgres:16.0.0
+    steps:
+      - checkout
+
   run_tests:
     executor:
       name: node/default
@@ -26,4 +34,3 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-

@@ -2,13 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const user_1 = require("../user");
-//import supertest from 'supertest';
-//import app from '../../server';
 const dotenv_1 = tslib_1.__importDefault(require("dotenv"));
 const chai_1 = tslib_1.__importDefault(require("chai"));
 dotenv_1.default.config();
 const expect = chai_1.default.expect;
-//const request = supertest(app);
 const store = new user_1.UserStore();
 describe('User Model', () => {
     it('should have an index method', () => {
@@ -24,7 +21,7 @@ describe('User Model', () => {
         expect(store.update).to.exist;
     });
     it('should have a delete method', () => {
-        expect(store.update).to.exist;
+        expect(store.delete).to.exist;
     });
     it('should have a authentication method', () => {
         expect(store.authenticate).to.exist;

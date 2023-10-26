@@ -11,6 +11,7 @@
     "bcrypt": "^5.1.1",
     "chai": "^4.3.10",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "db-migrate": "^0.11.14",
     "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.3.1",
@@ -30,9 +31,10 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "node build/server.js",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
-    "test": "mocha ./**/*_spec.js --exit",
-    "build": "tsc"
+    "watch": "ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
+    "test": "db-migrate --env test up && mocha ./**/*_spec.js --exit && db-migrate --env test reset",
+    "build": "tsc",
+    "watch-console": "ENV=console node build/src/console.js"
   },
   "author": "",
   "license": "ISC",

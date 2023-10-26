@@ -1,12 +1,9 @@
 import { UserStore } from "../user";
-//import supertest from 'supertest';
-//import app from '../../server';
 import dotenv from 'dotenv';
 import chai from 'chai';
 
 dotenv.config();
 const expect = chai.expect;
-//const request = supertest(app);
 const store = new UserStore();
 
 describe('User Model', () => {
@@ -23,10 +20,9 @@ describe('User Model', () => {
         expect(store.update).to.exist;
     });
     it('should have a delete method', () => {
-        expect(store.update).to.exist;
+        expect(store.delete).to.exist;
     });
     it('should have a authentication method', () => {
         expect(store.authenticate).to.exist;
     });
-
-})
+});

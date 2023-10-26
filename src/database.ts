@@ -12,9 +12,12 @@ const {
     ENV,
 } = process.env;
 
+console.log('Environment is currently running in ' + ENV + " mode...");
+
 let client = new Pool();
 
-if (ENV === 'dev') {
+
+if (ENV === 'dev' || ENV === 'console') {
     client = new Pool({
         host: POSTGRES_HOST,
         database: POSTGRES_DB,
@@ -22,6 +25,7 @@ if (ENV === 'dev') {
         password: POSTGRES_PASSWORD
     });
 } else if (ENV === 'test') {
+
     client = new Pool({
         host: POSTGRES_HOST,
         database: POSTGRES_TEST_DB,
