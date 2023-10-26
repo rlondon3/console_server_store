@@ -16,7 +16,7 @@ jobs:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
-      - image: circleci/postgres:9.6.2-alpine
+      - image: circleci/postgres:10
         environment:
           POSTGRES_DB: $POSTGRES_TEST_DB
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
