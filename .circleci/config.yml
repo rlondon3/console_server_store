@@ -11,7 +11,7 @@ workflows:
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:14 
+      - image: circleci/node:20 
         environment:
           PGHOST: 127.0.0.1
           PGUSER: $POSTGRES_USER
@@ -24,18 +24,6 @@ jobs:
 
     steps:
       - checkout
-
-      # Install PostgreSQL client tools
-      - run:
-          name: Install PostgreSQL Client Tools
-          command: |
-            apk update
-            apk add postgresql-client
-
-      - run:
-          name: Assign Superuser Role to PostgreSQL User
-          command: psql -U postgres -d $POSTGRES_DB -c "ALTER ROLE $POSTGRES_USER SUPERUSER"
-
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -48,5 +36,4 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-
 
