@@ -26,7 +26,7 @@ jobs:
           command: docker info
       - run:
           name: Start PostgreSQL
-          command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
+          command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 3051:5432 postgres
       - run:
           name: Set PGHOST
           command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
