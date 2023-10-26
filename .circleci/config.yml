@@ -2,16 +2,10 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
-workflows:
-  version: 2
-  build-tests:
-    jobs:
-      - run_tests
-
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:14 
+      - image: circleci/node:14
         environment:
           PGHOST: 127.0.0.1
           PGUSER: $POSTGRES_USER
@@ -24,6 +18,9 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Install PostgreSQL Client Tools
+          command: apk add --no-cache postgresql-client
       - run:
           name: Create PostgreSQL Role
           command: |
