@@ -25,22 +25,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: PostgreSQL Client Tools Install
-          command: |
-            sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-            wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-            sudo apt-get update
-            sudo apt-get install -y postgresql-client
-      - run:
           name: Check Port 5432 Availability
           command: |
             while ! nc -z -v -w1 127.0.0.1 5432; do
               echo "Waiting for port 5432 to become available..."
               sleep 1
             done
-      - run:
-          name: Wait for PostgreSQL
-          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
