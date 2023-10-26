@@ -11,7 +11,7 @@ workflows:
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:14 
         environment:
           PGHOST: 127.0.0.1
           PGUSER: $POSTGRES_USER
@@ -24,16 +24,6 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: Wait for PostgreSQL
-          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
-
-      - run:
-          name: Create 'store_owner' Role and Database
-          command: |
-            psql -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_TEST_DB;"
-            psql -U $POSTGRES_USER -c "CREATE ROLE store_owner WITH SUPERUSER LOGIN PASSWORD $POSTGRES_PASSWORD;"
-
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -46,5 +36,4 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-
 
