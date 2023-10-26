@@ -2,10 +2,20 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
+workflows:
+  version: 2
+  build-tests:
+    jobs:
+      - build
+      - run_tests:
+          requires:
+            - build
+
 jobs:
   build:
     docker:
       - image: cimg/go:1.17
+
     steps:
       - checkout
       - setup_remote_docker:
@@ -29,8 +39,16 @@ jobs:
             echo "export POSTGRES_CONTAINER_NAME=${POSTGRES_CONTAINER_NAME}" >> $BASH_ENV
       - run:
           name: Set POSTGRES_HOST
-          command: echo "export POSTGRES_HOST=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $POSTGRES_CONTAINER_NAME)" >> $BASH_ENV
+          command: |
+            export POSTGRES_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $POSTGRES_CONTAINER_NAME)
+            echo "export POSTGRES_HOST=${POSTGRES_HOST}" >> $BASH_ENV
           no_output_timeout: 10s 
+      - run:
+          name: Install Node.js and npm
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            sudo npm install -g npm
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
