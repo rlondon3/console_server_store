@@ -24,6 +24,10 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Create PostgreSQL Superuser
+          command: createuser -s -r postgres
+
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -36,4 +40,5 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
+
 
