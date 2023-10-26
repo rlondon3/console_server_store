@@ -25,6 +25,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Stop PostgreSQL Inside Docker Container
+          command: |
+            docker exec circleci/postgres:9.6.2-alpine pg_ctl stop -D /var/lib/postgresql/data
+      - run:
           name: Check Port 5432 Availability
           command: |
             while ! nc -z -v -w1 127.0.0.1 5432; do
