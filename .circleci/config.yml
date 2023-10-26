@@ -16,12 +16,14 @@ jobs:
       - image: cimg/go:1.17
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.7  # Specify the desired Docker version
       - run:
           name: Check Docker Version
-          command: DOCKER_BUILDKIT=1 docker --log-level=debug --version
+          command: docker --version
       - run:
           name: Check Docker Status
-          command: DOCKER_BUILDKIT=1 docker --log-level=debug info
+          command: docker info
       - run:
           name: Start PostgreSQL
           command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
