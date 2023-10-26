@@ -25,9 +25,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Stop PostgreSQL Inside Docker Container
+          name: PostgreSQL Client Tools Install
           command: |
-            docker exec circleci/postgres:9.6.2-alpine pg_ctl stop -D /var/lib/postgresql/data
+            sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+            wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+            sudo apt-get update
+            sudo apt-get install -y postgresql-client
       - run:
           name: Check Port 5432 Availability
           command: |
