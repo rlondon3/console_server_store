@@ -16,6 +16,12 @@ jobs:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
+      - run:
+          name: Check Docker Version
+          command: docker --version
+      - run:
+          name: Start Docker Daemon
+          command: dockerd --host=unix:///var/run/docker.sock
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_DB: $POSTGRES_TEST_DB
@@ -50,4 +56,3 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-
