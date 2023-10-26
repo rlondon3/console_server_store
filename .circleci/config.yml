@@ -15,6 +15,7 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
+
     steps:
       - checkout
       - setup_remote_docker:
@@ -30,22 +31,16 @@ jobs:
           command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 3051:5432 -e POSTGRES_DB=$POSTGRES_TEST_DB postgres
       - run:
           name: Check PostgreSQL Container Status
+          command: docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
+      - run:
+          name: Get PostgreSQL Container Name
           command: |
-            # Your Docker command to check the container status
-            docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
-            # Extract and store the PostgreSQL container name
             export POSTGRES_CONTAINER_NAME=$(docker ps --format "{{.Names}}" | grep postgres)
             echo "export POSTGRES_CONTAINER_NAME=${POSTGRES_CONTAINER_NAME}" >> $BASH_ENV
       - run:
           name: Set POSTGRES_HOST
-          command: echo "export POSTGRES_HOST=$POSTGRES_CONTAINER_NAME" >> $BASH_ENV
+          command: echo "export POSTGRES_HOST=\$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $POSTGRES_CONTAINER_NAME)" >> $BASH_ENV
           no_output_timeout: 10s 
-
-  run_tests:
-    executor:
-      name: node/default
-    steps:
-      - checkout
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -54,9 +49,7 @@ jobs:
           command: |
             node -v
             npm -v
-      - run:
-          name: Run Mocha Unit Tests
-          command: |
-            npm run test
+            npm run test  # Add your test script command here
+
 
 
