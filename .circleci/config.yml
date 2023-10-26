@@ -27,8 +27,8 @@ jobs:
       - run:
           name: install postgresql-client
           command: |
-            apk update
-            apk add postgresql-client
+            apt-get update
+            apt-get add postgresql-client
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
