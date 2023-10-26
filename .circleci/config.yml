@@ -13,7 +13,9 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
-      - image: cimg/postgres
+        environment:
+          PGHOST: 127.0.0.1
+      - image: circleci/postgres
     steps:
       - checkout
 
