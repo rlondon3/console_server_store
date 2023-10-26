@@ -26,7 +26,11 @@ jobs:
       - checkout
       - run:
           name: Check Port 5432 Availability
-          command: sudo lsof -i :5432 || true
+          command: |
+            while ! nc -z -v -w1 127.0.0.1 5432; do
+              echo "Waiting for port 5432 to become available..."
+              sleep 1
+            done
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
