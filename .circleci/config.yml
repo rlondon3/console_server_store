@@ -16,7 +16,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
-      - image: cimg/postgres:14.0.0
+      - image:  cimg/postgres:16.0.0-postgis
         environment:
           POSTGRES_DB: $POSTGRES_TEST_DB
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
