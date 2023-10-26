@@ -32,7 +32,7 @@ jobs:
           command: docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
       - run:
           name: Set POSTGRES_HOST
-          command: echo "export POSTGRES_HOST=host.docker.internal" >> $BASH_ENV
+          command: echo "export POSTGRES_HOST=127.0.0.1" >> $BASH_ENV
           no_output_timeout: 10s 
 
   run_tests:
