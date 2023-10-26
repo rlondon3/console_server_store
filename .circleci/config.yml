@@ -24,6 +24,14 @@ jobs:
       POSTGRES_DB: circleci
 
     steps:
+      - run:
+          name: install postgresql-client
+          command: |
+            apk update
+            apk add postgresql-client
+      - run:
+          name: Wait for PostgreSQL
+          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - checkout
       - run:
           name: Check Port 5432 Availability
@@ -32,9 +40,6 @@ jobs:
               echo "Waiting for port 5432 to become available..."
               sleep 1
             done
-      - run:
-          name: Wait for PostgreSQL
-          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
