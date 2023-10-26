@@ -17,6 +17,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Check Docker Version
+          command: docker --version
+      - run:
+          name: Check Docker Status
+          command: docker info
+      - run:
           name: Start PostgreSQL
           command: docker run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
       - run:
@@ -25,7 +31,7 @@ jobs:
       - run:
           name: Set PGHOST
           command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
-          no_output_timeout: 10s  # Ensure environment variable is set
+          no_output_timeout: 10s 
 
   run_tests:
     executor:
