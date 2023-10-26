@@ -16,7 +16,7 @@ jobs:
       - image: cimg/go:1.17
         environment:
           PGHOST: 127.0.0.1
-          POSTGRES_PASSWORD: $POSTGRES_PASSWORD # Set the POSTGRES_PASSWORD here
+          POSTGRES_PASSWORD: Rs14251425!
       - image: circleci/postgres
     steps:
       - checkout
