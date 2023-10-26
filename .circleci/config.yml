@@ -26,7 +26,7 @@ jobs:
           command: docker info
       - run:
           name: Start PostgreSQL
-          command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 3051:5432 postgres
+          command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 3051:5432 postgres
       - run:
           name: Check PostgreSQL Container Status
           command: docker ps  # Check the status of running containers
