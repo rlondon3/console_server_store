@@ -24,6 +24,7 @@ jobs:
       POSTGRES_DB: circleci
 
     steps:
+      - setup_remote_docker
       - run:
           name: Wait for PostgreSQL
           command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
