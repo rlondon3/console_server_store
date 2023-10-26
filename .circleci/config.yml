@@ -14,12 +14,18 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
-        environment:
-          PGHOST: 127.0.0.1
-          POSTGRES_PASSWORD: Rs14251425!
-      - image: circleci/postgres
     steps:
       - checkout
+      - run:
+          name: Start PostgreSQL
+          command: docker run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
+      - run:
+          name: Wait for PostgreSQL to Start
+          command: sleep 10  # Wait for PostgreSQL to start (adjust as needed)
+      - run:
+          name: Set PGHOST
+          command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
+          no_output_timeout: 10s  # Ensure environment variable is set
 
   run_tests:
     executor:
@@ -38,4 +44,5 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
+
 
