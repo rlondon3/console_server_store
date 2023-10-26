@@ -9,12 +9,14 @@ workflows:
       - run_tests:
           requires:
             - build
+
 jobs:
   build:
     docker:
       - image: cimg/go:1.17
         environment:
           PGHOST: 127.0.0.1
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD # Set the POSTGRES_PASSWORD here
       - image: circleci/postgres
     steps:
       - checkout
@@ -36,3 +38,4 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
+
