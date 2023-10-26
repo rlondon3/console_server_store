@@ -2,6 +2,11 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
+services:
+  docker:
+    image: docker:20.10.7-dind
+    command: ["dockerd-entrypoint.sh"]
+    
 workflows:
   version: 2
   build-tests:
@@ -16,8 +21,6 @@ jobs:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
-    services:
-      - docker:dind 
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_DB: $POSTGRES_TEST_DB
