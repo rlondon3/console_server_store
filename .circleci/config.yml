@@ -15,7 +15,6 @@ jobs:
         environment:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
-          PORT: "3051"
           NODE_ENV: test
       - image: circleci/postgres:9.6.2-alpine
         environment:
@@ -26,15 +25,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Check Port 3051 Availability
+          name: Check Port 5432 Availability
           command: |
-            while ! nc -z -v -w1 127.0.0.1 3051; do
-              echo "Waiting for port 3051 to become available..."
+            while ! nc -z -v -w1 127.0.0.1 5432; do
+              echo "Waiting for port 5432 to become available..."
               sleep 1
             done
       - run:
           name: Wait for PostgreSQL
-          command: dockerize -wait tcp://127.0.0.1:3051 -timeout 1m
+          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
