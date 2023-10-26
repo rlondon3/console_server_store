@@ -16,6 +16,7 @@ jobs:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
+    steps:
       - run:
           name: Check Docker Version
           command: docker --version
