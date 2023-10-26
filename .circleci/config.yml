@@ -12,10 +12,6 @@ jobs:
   run_tests:
     docker:
       - image: circleci/node:14 
-        environment:
-          PGHOST: $POSTGRES_HOST
-          PGUSER: $POSTGRES_USER
-          NODE_ENV: test
       - image: circleci/postgres:10
         environment:
           POSTGRES_USER: circleci
