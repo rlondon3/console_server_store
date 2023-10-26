@@ -29,7 +29,7 @@ jobs:
           command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 3051:5432 -e POSTGRES_DB=$POSTGRES_TEST_DB postgres
       - run:
           name: Check PostgreSQL Container Status
-          command: docker ps  # Check the status of running containers
+          command: docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
       - run:
           name: Set PGHOST
           command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
