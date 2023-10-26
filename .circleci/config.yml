@@ -28,9 +28,6 @@ jobs:
           name: Start PostgreSQL
           command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
       - run:
-          name: Wait for PostgreSQL to Start
-          command: sleep 10  # Wait for PostgreSQL to start (adjust as needed)
-      - run:
           name: Set PGHOST
           command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
           no_output_timeout: 10s 
