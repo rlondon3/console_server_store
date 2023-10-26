@@ -1,15 +1,16 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
+
 workflows:
   version: 2
   build-tests:
     jobs:
-      - run_tests:
-          context: console_server_store
+      - run_tests
+
 jobs:
   run_tests:
-    docker: #where things will be ran(docker, windows, mac, virtual machine)
+    docker:
       - image: circleci/node:7.10
         environment:
           PGHOST: 127.0.0.1
@@ -20,10 +21,7 @@ jobs:
           POSTGRES_DB: $POSTGRES_TEST_DB
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_USER: $POSTGRES_USER
-jobs:
-  run_tests:
-    executor:
-      name: node/default
+
     steps:
       - checkout
       - node/install-packages:
