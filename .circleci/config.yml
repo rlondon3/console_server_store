@@ -24,6 +24,14 @@ jobs:
 
     steps:
       - checkout
+
+      # Install PostgreSQL client tools
+      - run:
+          name: Install PostgreSQL Client Tools
+          command: |
+            apk update
+            apk add postgresql-client
+
       - run:
           name: Assign Superuser Role to PostgreSQL User
           command: psql -U postgres -d $POSTGRES_DB -c "ALTER ROLE $POSTGRES_USER SUPERUSER"
