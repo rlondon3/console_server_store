@@ -21,7 +21,9 @@ jobs:
           POSTGRES_DB: $POSTGRES_TEST_DB
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_USER: $POSTGRES_USER
-
+        command: >-
+          docker run -d -p 3051:5432 circleci/postgres:9.6.2-alpine
+          sleep 10
     steps:
       - checkout
       - run:
@@ -31,6 +33,9 @@ jobs:
               echo "Waiting for port 5432 to become available..."
               sleep 1
             done
+      - run:
+          name: Wait for PostgreSQL
+          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -43,4 +48,3 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-
