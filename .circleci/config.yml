@@ -11,7 +11,7 @@ workflows:
 jobs:
   run_tests:
     docker:
-      - image: circleci/node:20 
+      - image: circleci/node:14 
         environment:
           PGHOST: 127.0.0.1
           PGUSER: $POSTGRES_USER
