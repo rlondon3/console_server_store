@@ -16,18 +16,11 @@ jobs:
           PGHOST: $POSTGRES_HOST
           PGUSER: $POSTGRES_USER
           NODE_ENV: test
-      - run:
-          name: Check Docker Version
-          command: docker --version
-      - run:
-          name: Start Docker Daemon
-          command: dockerd --host=unix:///var/run/docker.sock
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_DB: $POSTGRES_TEST_DB
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_USER: $POSTGRES_USER
-
     steps:
       - checkout
       - run:
