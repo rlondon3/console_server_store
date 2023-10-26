@@ -39,7 +39,7 @@ jobs:
           name: Set POSTGRES_HOST
           command: |
             export POSTGRES_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $POSTGRES_CONTAINER_NAME)
-            echo "export POSTGRES_HOST=${POSTGRES_CONTAINER_NAME}" >> $BASH_ENV
+            echo "export POSTGRES_HOST=${POSTGRES_HOST}" >> $BASH_ENV
           no_output_timeout: 10s 
 
   run_tests:
