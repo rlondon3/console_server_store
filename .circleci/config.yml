@@ -27,7 +27,7 @@ jobs:
       - run:
           name: install postgresql-client
           command: |
-            apt-get update
+            sudo apt-get update
             apt-get add postgresql-client
       - run:
           name: Wait for PostgreSQL
