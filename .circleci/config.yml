@@ -18,13 +18,13 @@ jobs:
       - checkout
       - run:
           name: Check Docker Version
-          command: docker --version
+          command: DOCKER_BUILDKIT=1 docker --log-level=debug --version
       - run:
           name: Check Docker Status
-          command: sudo docker info
+          command: DOCKER_BUILDKIT=1 docker --log-level=debug info
       - run:
           name: Start PostgreSQL
-          command: docker run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
+          command: DOCKER_BUILDKIT=1 docker --log-level=debug run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
       - run:
           name: Wait for PostgreSQL to Start
           command: sleep 10  # Wait for PostgreSQL to start (adjust as needed)
