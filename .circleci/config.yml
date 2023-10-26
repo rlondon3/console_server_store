@@ -32,7 +32,7 @@ jobs:
           command: docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.CreatedAt}}\t{{.Status}}\t{{.Ports}}\t{{.Names}}"
       - run:
           name: Set PGHOST
-          command: echo "export PGHOST=127.0.0.1" >> $BASH_ENV
+          command: echo "export PGHOST=host.docker.internal" >> $BASH_ENV
           no_output_timeout: 10s 
 
   run_tests:
