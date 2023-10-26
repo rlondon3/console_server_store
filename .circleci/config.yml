@@ -21,7 +21,7 @@ jobs:
           command: docker --version
       - run:
           name: Check Docker Status
-          command: docker info
+          command: sudo docker info
       - run:
           name: Start PostgreSQL
           command: docker run -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres
