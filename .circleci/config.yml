@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
-
 workflows:
   version: 2
   build-tests:
@@ -15,7 +14,6 @@ jobs:
   build:
     docker:
       - image: cimg/go:1.17
-
     steps:
       - checkout
       - setup_remote_docker:
@@ -41,14 +39,14 @@ jobs:
           name: Set POSTGRES_HOST
           command: |
             export POSTGRES_HOST=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $POSTGRES_CONTAINER_NAME)
-            echo "export POSTGRES_HOST=${POSTGRES_HOST}" >> $BASH_ENV
+            echo "export POSTGRES_HOST=${POSTGRES_CONTAINER_NAME}" >> $BASH_ENV
           no_output_timeout: 10s 
-      - run:
-          name: Install Node.js and npm
-          command: |
-            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            sudo npm install -g npm
+
+  run_tests:
+    executor:
+      name: node/default
+    steps:
+      - checkout
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -57,23 +55,6 @@ jobs:
           command: |
             node -v
             npm -v
-
-  run_tests:
-    executor:
-      name: node/default
-
-    steps:
-      - checkout
-      - run:
-          name: Display Environment Info
-          command: |
-            echo "Environment Info:"
-            echo "PostgreSQL container name: $POSTGRES_CONTAINER_NAME"
-            echo "PostgreSQL database: $POSTGRES_TEST_DB"
-            echo "PostgreSQL host: $POSTGRES_HOST"
-      - node/install-packages:
-          cache-path: ./node_modules
-          override-ci-command: npm install
       - run:
           name: Run Mocha Unit Tests
           command: |
