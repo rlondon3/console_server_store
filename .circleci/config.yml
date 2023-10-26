@@ -15,10 +15,12 @@ jobs:
       - image: circleci/postgres:10
         environment:
           POSTGRES_USER: circleci
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_DB: circleci
     environment:
       NODE_ENV: test
       POSTGRES_USER: circleci
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       POSTGRES_DB: circleci
 
     steps:
