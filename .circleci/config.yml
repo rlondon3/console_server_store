@@ -25,8 +25,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Wait for PostgreSQL
-          command: dockerize -wait tcp://127.0.0.1:5432 -timeout 1m
+          name: Create PostgreSQL Role
+          command: |
+            psql -U postgres -c "CREATE ROLE store_owner WITH LOGIN PASSWORD 'password' CREATEDB;"
       - node/install-packages:
           cache-path: ./node_modules
           override-ci-command: npm install
@@ -39,4 +40,3 @@ jobs:
           name: Run Mocha Unit Tests
           command: |
             npm run test
-
